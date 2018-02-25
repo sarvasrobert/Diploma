@@ -6,7 +6,7 @@ I used Python 2.7 and OpenCV2 library ...
 
 Screens:
 
-![alt text](https://github.com/sarvasrobert/Diploma/blob/master/1.png?raw=true)
+![alt text](https://raw.githubusercontent.com/sarvasrobert/Diploma/1.png)
 
-![alt text](https://github.com/sarvasrobert/Diploma/blob/ca303c52d6fef8fe3fcfec4f0a552901a1dd8997/2.png?raw=true)
+![alt text](https://raw.githubusercontent.com/sarvasrobert/Diploma/2.png)
 	
