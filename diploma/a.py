@@ -29,67 +29,65 @@ from PIL import Image,ImageTk,ImageFilter,ImageOps,ImageDraw
 from matplotlib import pyplot as plt
 
 #####################################################################
+'''  Top Level functions for opening and closing whole application, whitch is stored in MainGUI class  '''
 
-'''
-Global variables setup
-'''
-
-BLUE = [255,0,0]        # rectangle color
-RED = [0,0,255]         # PR BG
-GREEN = [0,255,0]       # PR FG
-BLACK = [0,0,0]         # sure BG
-WHITE = [255,255,255]   # sure FG
-
-DRAW_BG = {'color' : BLACK, 'val' : 0}
-DRAW_FG = {'color' : WHITE, 'val' : 1}
-DRAW_PR_FG = {'color' : GREEN, 'val' : 3}
-DRAW_PR_BG = {'color' : RED, 'val' : 2}
-
-# setting up flags
-rect = (0,0,1,1)
-drawing = False         # flag for drawing curves
-rectangle = False       # flag for drawing rect
-rect_over = False       # flag to check if rect drawn
-rect_or_mask = 100      # flag for selecting rect or mask mode
-thickness = 3           # brush thickness
-
-
-foregroundcheck= False
-backgroundcheck= False
-
-#####################################################################
-
-def vp_start_gui():
+def start_gui():
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = Tk()
-    top = New_Toplevel_1 (root)
+    top = MainGUI (root)
     a_support.init(root, top)
     root.mainloop()
 
 w = None
-def create_New_Toplevel_1(root, *args, **kwargs):
+def create_New_GUI(root, *args, **kwargs):
     '''Starting point when module is imported by another program.'''
     global w, w_win, rt
     rt = root
     w = Toplevel (root)
-    top = New_Toplevel_1 (w)
+    top = MainGUI (w)
     a_support.init(w, top, *args, **kwargs)
     return (w, top)
 
-def destroy_New_Toplevel_1():
+def destroy_MainGUI():
     global w
+    cv2.destroyAllWindows();
     w.destroy()
     w = None
 
 
-class New_Toplevel_1:
+#####################################################################
+''' Main GUI class that cover all the functionality and operations '''
+
+class MainGUI:
     def __init__(self, top=None):
-        '''This class configures and populates the toplevel window.
+        '''This class configures and populates the main GUI window.
            top is the toplevel containing window.'''
+
+
+        ''' FLAGS AND GLOBAL PARAMETERS'''
+        self.RED = [0,0,255]         # rectangle color
+        self.BLACK = [0,0,0]         # sure BG
+        self.WHITE = [255,255,255]   # sure FG
+
+        self.DRAW_BG = False         # turn on BG selction of pixels
+        self.DRAW_FG = False         # turn on FG selction of pixels
+
+        # setting up flags
+        self.rect = (0,0,1,1)
+        self.drawing = False         # flag for drawing curves
+        self.rectangle = False       # flag for drawing rect
+        self.rect_over = False       # flag to check if rect drawn
+        self.rect_or_mask = 100      # flag for selecting rect or mask mode
+        self.thickness = 3           # brush thickness
+
+
+        foregroundcheck= False
+        backgroundcheck= False        
         
-        self.value = 10         # drawing initialized to FG
-        self.rect_or_mask = 0        # flag for selecting rect or mask mode
+        self.value = 10              # drawing initialized to FG
+        self.rect_or_mask = 0        # flag for selecting rect or mask mode for Grabcut extraction
+        self.pRect = True
         
         _bgcolor = '#d9d9d9'  # X11 color: 'gray85'
         _fgcolor = '#000000'  # X11 color: 'black'
@@ -98,7 +96,7 @@ class New_Toplevel_1:
         _ana2color = '#d9d9d9' # X11 color: 'gray85' 
         self.top=top
         self.top.geometry("1680x790+376+61")
-        self.top.title("New Toplevel 1")
+        self.top.title("Video Object Segmentation")
         self.top.configure(background="light slate gray")
         self.top.configure(highlightbackground="#d9d9d9")
         self.top.configure(highlightcolor="black")
@@ -209,36 +207,35 @@ class New_Toplevel_1:
         self.Button6.configure(state="disabled")
         self.Button6.configure(text='''background''', foreground='white')
             
-        self.pRect = True
-
-
         
     def on_button_press(self, event):
         self.x = event.x
         self.y = event.y
         self.imag =self.current_image
-        print(self.value)
+        
 
     def on_button_move(self, event):
         x0,y0 = (self.x, self.y) 
         x1,y1 = (event.x,event.y)
-        #print(self.framewidth, self.frameheight)
+        ##print(self.framewidth, self.frameheight)
         y0 = int(y0 -((500 - self.frameheight)/2)) 
         y1 = int(y1-((500 - self.frameheight)/2)) 
         if self.pRect == True:
             rect = ImageDraw.Draw(self.current_image)
             rect.rectangle([x0,y0,x1,y1], fill=None, outline='red')
             
+            ##cv2.rectangle(self.currimage, (x0,y0), (x1,y1),[255,0,0], 4)
+            
         elif self.value == 2:
             ##cv2.circle(self.current_image,(x1,y1),5,'red',-1)
-            cv2.circle(self.mask,(x1,y1),5,[0,0,255],-1)
+            cv2.circle(self.mask,(x1,y1),5,0,-1)
             
             circ = ImageDraw.Draw(self.current_image)
             circ.rectangle([x1-5, y1-5, x1+5, y1+5], fill='red')           
             
         elif self.value == 0:
             ##cv2.circle(self.current_image,(x1,y1),5,'blue',-1)
-            cv2.circle(self.mask,(x1,y1),5,[0,255,0],-1)
+            cv2.circle(self.mask,(x1,y1),5,1,-1)
             
             circ = ImageDraw.Draw(self.current_image)
             circ.rectangle([x1-5, y1-5, x1+5, y1+5], fill='yellow')
@@ -259,12 +256,12 @@ class New_Toplevel_1:
             y1 = int(y1-((500 - self.frameheight)/2)) 
 
             rect = ImageDraw.Draw(self.current_image)
-            print('rectangle je ',x0,y0,x1,y1)
+            ##print('rectangle je ',x0,y0,x1,y1)
             rect.rectangle([x0,y0,x1,y1], fill=None, outline='red')
             imgtk = ImageTk.PhotoImage(image=self.current_image)
             self.panel.imgtk = imgtk  # anchor imgtk so it does not be deleted by garbage-collector
             self.panel.config(image=imgtk)
-            self.rectangle = (x0,y0,x1,y1)
+            self.rectangle = (min(x0,x1), min(y0,y1), abs(x1-x0), abs(y1-y0))
             #self.pRect = False
 
     def fground(self):
@@ -275,70 +272,34 @@ class New_Toplevel_1:
         self.value = 2
         print('nastavene je', self.value)
         
-    def resizeAndPad(self, img, size, padColor=0):
 
-        h, w = img.shape[:2]
-        sh, sw = size
-
-        # interpolation method
-        if h > sh or w > sw: # shrinking image
-            interp = cv2.INTER_AREA
-        else: # stretching image
-            interp = cv2.INTER_CUBIC
-
-        # aspect ratio of image
-        aspect = w/h
-
-        # compute scaling and pad sizing
-        if aspect > 1: # horizontal image
-            new_w = sw
-            new_h = np.round(new_w/aspect).astype(int)
-            pad_vert = (sh-new_h)/2
-            pad_top, pad_bot = np.floor(pad_vert).astype(int), np.ceil(pad_vert).astype(int)
-            pad_left, pad_right = 0, 0
-        elif aspect < 1: # vertical image
-            new_h = sh
-            new_w = np.round(new_h*aspect).astype(int)
-            pad_horz = (sw-new_w)/2
-            pad_left, pad_right = np.floor(pad_horz).astype(int), np.ceil(pad_horz).astype(int)
-            pad_top, pad_bot = 0, 0
-        else: # square image
-            new_h, new_w = sh, sw
-            pad_left, pad_right, pad_top, pad_bot = 0, 0, 0, 0
-
-        # set pad color
-        if len(img.shape) is 3 and not isinstance(padColor, (list, tuple, np.ndarray)): # color image but only one color provided
-            padColor = [padColor]*3
-
-        # scale and pad
-        scaled_img = cv2.resize(img, (new_w, new_h), interpolation=interp)
-        scaled_img = cv2.copyMakeBorder(scaled_img, pad_top, pad_bot, pad_left, pad_right, borderType=cv2.BORDER_CONSTANT, value=padColor)
-
-        return scaled_img
-    
     
     def video_loop(self):
         """ Get frame from the video stream and show it in Tkinter """
         ok, frame = self.vs.read()  # read frame from video stream
+
+        ## if self.index < self.NumberFrames and self.stopped:  # frame captured without any errors
         if ok and self.stopped:  # frame captured without any errors
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                exit
             frame = imutils.resize(frame, width=self.framewidth,height=self.frameheight)
             cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)  # convert colors from BGR to RGBA
             self.currimage = frame
             self.current_image = Image.fromarray(cv2image)  # convert image for PIL
             self.current = self.current_image
-            #self.current_image= self.current_image.resize([self.framewidth,self.frameheight],PIL.Image.ANTIALIAS)
+            ##self.current_image= self.current_image.resize([self.framewidth,self.frameheight],PIL.Image.ANTIALIAS)
             
 ##            self.current_image = cv2.resizeWindow(frame,681,681)
 ##            frame = self.resizeAndPad(frame, (681,681), 127 )
 ##            cv2.imshow('frame', frame)
             
-            imgtk = ImageTk.PhotoImage(image=self.current_image)  # convert image for tkinter
+            ##imgtk = ImageTk.PhotoImage(image=self.stream[self.index])  # convert image for tkinter
+            imgtk = ImageTk.PhotoImage(image=self.current)  # convert image for tkinter
             self.imgtk = imgtk
+            #time.sleep(0.2)
             self.panel.imgtk = imgtk  # anchor imgtk so it does not be deleted by garbage-collector  
             self.panel.config(image=imgtk)  # show the image
+            ##self.index+=1
             #self.root.attributes("-fullscreen",True)
+        #self.panel.after(24, self.video_loop)  # call the same function after 30 milliseconds
         self.panel.after(24, self.video_loop)  # call the same function after 30 milliseconds
         
         
@@ -388,23 +349,43 @@ class New_Toplevel_1:
             self.currimage = frame
             self.current_image = Image.fromarray(cv2image)  # convert image for PIL
             self.current = self.current_image
-            #self.current_image= self.current_image.resize([self.framewidth,self.frameheight],PIL.Image.ANTIALIAS)
-            
+            #self.current_image= self.current_image.resize([self.framewidth,self.frameheight],PIL.Image.ANTIALIAS)           
             imgtk = ImageTk.PhotoImage(image=self.current_image)  # convert image for tkinter
             self.imgtk = imgtk
             self.panel.imgtk = imgtk  # anchor imgtk so it does not be deleted by garbage-collector  
             self.panel.config(image=imgtk)  # show the image
-        
+
+        self.stream = []
+        self.NumberFrames = self.nFrames
+        ##self.stream.append(self.current)
+
+        ##while self.NumberFrames > 1:
+        ##    ok, frame = self.vs.read()
+        ##    frame = imutils.resize(frame, width=self.framewidth, height=self.frameheight)
+        ##    cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)  # convert colors from BGR to RGBA
+        ##    self.current_image = Image.fromarray(cv2image)  # convert image for PIL
+        ##    self.stream.append(self.current_image)
+        ##    self.NumberFrames -=1
+
+        # print('mal by sa prekreslit')
+        # imgtk = ImageTk.PhotoImage(image=self.stream[self.nFrames])  # convert image for tkinter
+        # self.imgtk = imgtk
+        # self.panel.imgtk = imgtk  # anchor imgtk so it does not be deleted by garbage-collector  
+        # self.panel.config(image=imgtk)  # show the image
+        ##self.NumberFrames = self.nFrames
+        ##self.index = 0
+
     def grabcut(self):
         img = self.currimage
-        self.mask = np.zeros(img.shape[:2],dtype = np.uint8)
         #print(mask.shape[:2])
         rect = self.rectangle
-        if (self.rect_or_mask == 0):  
+        if (self.rect_or_mask == 0):
+            self.mask = np.zeros(img.shape[:2],dtype = np.uint8)
+            cv2.rectangle(self.mask, (rect[0],rect[1]),(rect[2],rect[3]),[255,0,0], 2)
             bgdmodel = np.zeros((1,65),np.float64)
             fgdmodel = np.zeros((1,65),np.float64)
-            print(bgdmodel, fgdmodel)
-            cv2.grabCut(img,self.mask,rect,bgdmodel,fgdmodel,5,cv2.GC_INIT_WITH_RECT)
+            #print(bgdmodel, fgdmodel)
+            cv2.grabCut(img,self.mask,rect,bgdmodel,fgdmodel,1,cv2.GC_INIT_WITH_RECT)
             #self.mask2 = np.where((self.mask==1)|(self.mask==3),255,0).astype("uint8")
             #img = img* self.mask2[:,:,np.newaxis]
             self.rect_or_mask = 1
@@ -413,12 +394,15 @@ class New_Toplevel_1:
         elif (self.rect_or_mask == 1):         # grabcut with mask
             bgdmodel = np.zeros((1,65),np.float64)
             fgdmodel = np.zeros((1,65),np.float64)
-            print(bgdmodel, fgdmodel)
+            #print(bgdmodel, fgdmodel)
             cv2.grabCut(img,self.mask,rect,bgdmodel,fgdmodel,1,cv2.GC_INIT_WITH_MASK)
 
-        mask2 = np.where((self.mask==0) + (self.mask==2),0,255).astype('uint8')
+        mask2 = np.where((self.mask==0) + (self.mask==2),0,1).astype('uint8')
+        ##mask2 = np.where((self.mask==0) + (self.mask==2),0,255).astype('uint8')
         img = cv2.bitwise_and(img,img,mask=mask2)
-        
+        ##cv2.imshow('output',img)
+        ##img = img*mask2[:,:,np.newaxis]
+
         image = Image.fromarray(img)
         imgtk = ImageTk.PhotoImage(image=image)  # convert image for tkinter
         self.panel2.imgtk = imgtk  # anchor imgtk so it does not be deleted by garbage-collector  
@@ -426,7 +410,9 @@ class New_Toplevel_1:
         
         print('Grabcut sa urobil')
 
+
+
 if __name__ == '__main__':
-    vp_start_gui()
+    start_gui()
 
 
