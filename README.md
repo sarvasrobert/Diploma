@@ -23,10 +23,13 @@ Thesis: https://www.overleaf.com/read/gpyvkzbgdgxk
 
 ![GrabCut 1st object extraction step - setting rectangle](https://github.com/sarvasrobert/Diploma/blob/master/b.png?raw=true)
 
-Outputs and testing of OSVOS object segmentation from video based on 1 labeled frame.
+**Outputs and testing of OSVOS object segmentation from video based on 1 labeled frame.**
+
 1.Dog 100 iterations, res:800x450px
 ![OSVOS - dog 100 iterations](https://github.com/sarvasrobert/Diploma/blob/master/dog_100.gif?raw=true)
+
 2.Dog 100 iterations, res:800x450px
 ![OSVOS - dog2 100 iterations](https://github.com/sarvasrobert/Diploma/blob/master/dog2_100.gif?raw=true)
+
 3.Man 100 iterations, res:800x450px
 ![OSVOS - human 100 iterations](https://github.com/sarvasrobert/Diploma/blob/master/soko_100.gif?raw=true)
