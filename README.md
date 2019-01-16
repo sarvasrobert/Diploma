@@ -1,9 +1,10 @@
 
 # Detection of motion blurred object in video 
 
-## Diploma thesis - Alpha 0.1 
+## Diploma thesis - Alpha 0.5 
 
 -Implemented in Python 3.6 and OpenCV2 library.
+
 
 **Description:**
 
@@ -13,6 +14,8 @@
 * Third step is to create Bounding box around segmented mask and detect if any motion blur is created
 * Fourth step is segment motion blur with highest possible precision  
 
+Links:
+Thesis: https://www.overleaf.com/read/gpyvkzbgdgxk
 
 **Screens:**
 
@@ -20,4 +23,4 @@
 
 ![GrabCut 1st object extraction step - setting rectangle](https://github.com/sarvasrobert/Diploma/blob/master/b.png?raw=true)
 	
-![GrabCut 2st object extraction step - labeling image with FG/BG](https://github.com/sarvasrobert/Diploma/blob/master/c.png?raw=true)
+![OSVOS - dog 100 iterations](https://github.com/sarvasrobert/Diploma/blob/master/dog_100.gif?raw=true)
