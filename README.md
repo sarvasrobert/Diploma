@@ -3,16 +3,16 @@
 
 ## Diploma thesis - Alpha 0.5 
 
--Implemented in Python 3.6 and OpenCV2 library.
+-Implemented in Python 3.6, OpenCV2 library, Tensorflow.
 
 
 **Description:**
 
 *My thesis aim to detect motion blurred object in video.*
-* First step of program is to automaticaly select object of interest by Grabcut method.
-* Second Step is OSVOS - One shot video object segmentation - state of the art precision is  79% for this topic. 
-* Third step is to create Bounding box around segmented mask and detect if any motion blur is created
-* Fourth step is segment motion blur with highest possible precision  
+* Implement GrabCut method for semi-automatical selection of object.
+* OSVOS - One shot video object Segmentation - state of the art in precision(79% for one labeled image, 86% for 3 labeled images). 
+* Create tracking of object and delete all unwanted patches of objects mask.
+* Study motion blur - Confront Pattern recognition solutions with other solutions and implement the best solution 
 
 Links:
 Thesis: https://www.overleaf.com/read/gpyvkzbgdgxk
