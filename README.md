@@ -16,6 +16,9 @@
 
 Links:
 Thesis: https://www.overleaf.com/read/gpyvkzbgdgxk
+OSVOS (Tensorflow): https://github.com/scaelles/OSVOS-TensorFlow
+Python 3.6 Download: https://www.python.org/downloads/
+OpenCV2 & Matplotlib library: https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_setup/py_setup_in_windows/py_setup_in_windows.html
 
 **Screens:**
 
