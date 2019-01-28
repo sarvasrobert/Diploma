@@ -15,10 +15,10 @@
 * Study motion blur - Confront Pattern recognition solutions with other solutions and implement the best solution 
 
 Links:
--Thesis: https://www.overleaf.com/read/gpyvkzbgdgxk
--OSVOS (Tensorflow): https://github.com/scaelles/OSVOS-TensorFlow
--Python 3.6 Download: https://www.python.org/downloads/
--OpenCV2 & Matplotlib library: https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_setup/py_setup_in_windows/py_setup_in_windows.html
+-Thesis: https://www.overleaf.com/read/gpyvkzbgdgxk  <br />
+-OSVOS (Tensorflow): https://github.com/scaelles/OSVOS-TensorFlow  <br />
+-Python 3.6 Download: https://www.python.org/downloads/  <br />
+-OpenCV2 & Matplotlib library: https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_setup/py_setup_in_windows/py_setup_in_windows.html  <br />
 
 **Screens:**
 
