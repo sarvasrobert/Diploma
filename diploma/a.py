@@ -16,7 +16,7 @@ except ImportError:
     py3 = 1
     
 import sys
-import pymedia
+#import pymedia
 import time
 import os
 import a_support
@@ -80,7 +80,6 @@ class MainGUI:
         self.rect_over = False       # flag to check if rect drawn
         self.rect_or_mask = 100      # flag for selecting rect or mask mode
         self.thickness = 3           # brush thickness
-
 
         foregroundcheck= False
         backgroundcheck= False        
