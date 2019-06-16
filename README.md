@@ -1,5 +1,5 @@
 
-# Segmentation of motion blurred object in video 
+# Segmenting motion blurred objects in video 
 
 ## Diploma thesis - Alpha 1.0 
 
@@ -9,18 +9,18 @@
 **Description of developing application:**
 
 *My thesis aim to segment motion blurred object in video.*
-* Implement GrabCut method for semi-automatical selection of object.
-* OSVOS - One shot video object Segmentation - state of the art in precision(79% for one labeled image, 86% for 3 labeled images). 
-* Compare solution of detection of motion blur features & Optical flow solutions & Alpha Matting solutions.  
-* Implement one of these solutions and compare with state-of-the-art results.
+* 1. Implement GrabCut method for semi-automatic segmentation of object of interest.
+* 2. OSVOS - One shot video object Segmentation - state of the art in precision(79% for one labeled image, 86% for 3 labeled images). 
+* 3. Compare solution of detection of motion blur features & Optical flow solutions & Alpha Matting solutions.  
+* 4. Implement one of these solutions and compare with state-of-the-art results.
 
 Links:
--Thesis: https://www.overleaf.com/read/gpyvkzbgdgxk  <br />
+-Thesis: https://github.com/sarvasrobert/Diploma/blob/master/Diploma_thesis.pdf  <br />
 -OSVOS (Tensorflow): https://github.com/scaelles/OSVOS-TensorFlow  <br />
 -Python 3.6 Download: https://www.python.org/downloads/  <br />
 -OpenCV2 & Matplotlib library: https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_setup/py_setup_in_windows/py_setup_in_windows.html  <br />
 
-You can find whole application under App folder. 
+You can find whole application under diploma folder. <br />
 Application consist of main.py, main_support.py, classifier.py, OSVOS folder, KNN_Matting folder.
 
 **Screens:**
