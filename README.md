@@ -1,24 +1,27 @@
 
-# Detection of motion blurred object in video 
+# Segmentation of motion blurred object in video 
 
-## Diploma thesis - Alpha 0.5 
+## Diploma thesis - Alpha 1.0 
 
--Implemented in Python 3.6, OpenCV2 library, Tensorflow.
+-Implemented in Python 3.6, OpenCV2 library, Tensorflow, Matplotlib, Scipy.
 
 
-**Description:**
+**Description of developing application:**
 
-*My thesis aim to detect motion blurred object in video.*
+*My thesis aim to segment motion blurred object in video.*
 * Implement GrabCut method for semi-automatical selection of object.
 * OSVOS - One shot video object Segmentation - state of the art in precision(79% for one labeled image, 86% for 3 labeled images). 
-* Create tracking of object and delete all unwanted patches of objects mask.
-* Study motion blur - Confront Pattern recognition solutions with other solutions and implement the best solution 
+* Compare solution of detection of motion blur features & Optical flow solutions & Alpha Matting solutions.  
+* Implement one of these solutions and compare with state-of-the-art results.
 
 Links:
 -Thesis: https://www.overleaf.com/read/gpyvkzbgdgxk  <br />
 -OSVOS (Tensorflow): https://github.com/scaelles/OSVOS-TensorFlow  <br />
 -Python 3.6 Download: https://www.python.org/downloads/  <br />
 -OpenCV2 & Matplotlib library: https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_setup/py_setup_in_windows/py_setup_in_windows.html  <br />
+
+You can find whole application under App folder. 
+Application consist of main.py, main_support.py, classifier.py, OSVOS folder, KNN_Matting folder.
 
 **Screens:**
 
